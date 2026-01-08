@@ -1,73 +1,155 @@
-# Welcome to your Lovable project
+Financial Data Analysis Chatbot
+Overview
 
-## Project info
+This project is a data-grounded financial analysis chatbot designed to answer questions strictly from user-uploaded data files. The chatbot does not use the internet or external knowledge. If an answer cannot be derived from the provided data, it clearly responds with:
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+"Sorry can not find the answer"
 
-## How can I edit this code?
+This makes the system reliable, auditable, and suitable for financial and analytical use cases where hallucination is unacceptable.
 
-There are several ways of editing your application.
+Key Features
 
-**Use Lovable**
+Answers questions only from uploaded structured data files
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+No external data access or assumptions
 
-Changes made via Lovable will be committed automatically to this repo.
+Deterministic and calculation-based responses
 
-**Use your preferred IDE**
+Explicit fallback when data is missing
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Suitable for portfolio analysis, fund comparison, and P&L evaluation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Data Scope
 
-Follow these steps:
+The chatbot works with structured tabular financial data, including but not limited to:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Investment portfolios and funds
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Holdings and trades
 
-# Step 3: Install the necessary dependencies.
-npm i
+Securities (Equity, Bond, Asset-Backed, etc.)
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Quantities, prices, and FX rates
 
-**Edit a file directly in GitHub**
+Profit and Loss metrics
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Each row in the dataset represents one holding or trade record.
 
-**Use GitHub Codespaces**
+Supported Data Fields
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The chatbot understands and uses the following fields:
 
-## What technologies are used for this project?
+Fund Identification: ShortName, PortfolioName
 
-This project is built with:
+Security Identification: SecurityId, SecName, SecurityTypeName
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Dates: AsOfDate, OpenDate, CloseDate
 
-## How can I deploy this project?
+Quantities & Prices: StartQty, Qty, StartPrice, Price
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Valuation: MV_Local, MV_Base
 
-## Can I connect a custom domain to my Lovable project?
+Profit and Loss Metrics:
 
-Yes, you can!
+PL_DTD (Day-to-Date)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+PL_MTD (Month-to-Date)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+PL_QTD (Quarter-to-Date)
+
+PL_YTD (Year-to-Date)
+
+Only these fields are used for calculations and comparisons.
+
+Core Rules (Strictly Enforced)
+
+The chatbot answers only using the uploaded files.
+
+External knowledge, web data, or assumptions are not allowed.
+
+If the answer is not present or cannot be calculated from the data, the response is exactly:
+
+"Sorry can not find the answer"
+
+No hallucinated values, summaries, or explanations.
+
+All calculations (counts, totals, comparisons) are derived strictly from the dataset.
+
+Data Interpretation Rules
+
+Each row = one holding or trade
+
+Number of holdings or trades = number of matching rows
+
+Fund performance comparison is based only on PL_YTD
+
+Yearly performance does not assume dates beyond AsOfDate
+
+If data is missing or incomplete, no inference is made
+
+Example Questions Supported
+Holdings & Trades
+
+Total number of holdings for a given fund
+
+Number of trades for a specific security
+
+Performance Analysis
+
+Which fund performed better based on yearly Profit and Loss
+
+Compare PL_YTD between two or more funds
+
+Valid Response Example
+
+Q: Which fund performed better based on yearly Profit and Loss?
+
+A: Based on PL_YTD, Fund A performed better than Fund B because its yearly profit/loss is higher.
+
+Invalid / Unsupported Query Example
+
+Q: What is the NAV of the fund?
+
+A: Sorry can not find the answer
+
+What This Chatbot Will NOT Do
+
+Guess or estimate missing values
+
+Use internet or real-time market data
+
+Answer conceptual finance questions
+
+Provide investment advice
+
+Intended Use Cases
+
+Financial data validation
+
+Portfolio performance analysis
+
+Fund comparison dashboards
+
+Internal analytics tools
+
+Academic or demo projects requiring zero hallucination
+
+Deployment Notes
+
+Designed to work with modern LLM frameworks (e.g., AI SDK, vo.dev, Flowise)
+
+Web access must be disabled
+
+A strict system prompt is required to enforce grounding
+
+Disclaimer
+
+This chatbot is an analytical tool and does not provide financial advice. All outputs are strictly derived from the uploaded data files.
+
+Author
+
+Project Type: Data-grounded AI chatbot for financial analysis
+
+If the data does not contain the answer, the chatbot will always say:
+
+"Sorry can not find the answer"
