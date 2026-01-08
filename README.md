@@ -1,155 +1,143 @@
-Financial Data Analysis Chatbot
-Overview
+# 📊 Financial Data Analysis Chatbot
 
-This project is a data-grounded financial analysis chatbot designed to answer questions strictly from user-uploaded data files. The chatbot does not use the internet or external knowledge. If an answer cannot be derived from the provided data, it clearly responds with:
+A lightweight, rule-based chatbot designed to answer **financial and investment-related queries** strictly using **user-uploaded structured data files**. This project focuses on **accuracy, transparency, and zero hallucination**, making it suitable for finance-sensitive environments.
 
-"Sorry can not find the answer"
+---
 
-This makes the system reliable, auditable, and suitable for financial and analytical use cases where hallucination is unacceptable.
+## 🎯 Project Objective
 
-Key Features
+The goal of this chatbot is to:
 
-Answers questions only from uploaded structured data files
+1️⃣ Analyze financial portfolio data
+2️⃣ Answer user questions only from uploaded files
+3️⃣ Avoid assumptions, guesses, or external knowledge
+4️⃣ Provide clear numeric and factual answers
 
-No external data access or assumptions
+If the data is missing or insufficient, the chatbot responds safely instead of guessing.
 
-Deterministic and calculation-based responses
+---
 
-Explicit fallback when data is missing
+## 📂 Supported Data Scope
 
-Suitable for portfolio analysis, fund comparison, and P&L evaluation
+The chatbot works **only** with uploaded tabular data files containing:
 
-Data Scope
+1️⃣ Investment portfolios
+2️⃣ Funds and holdings
+3️⃣ Securities and instruments
+4️⃣ Trades, quantities, and prices
+5️⃣ Profit & Loss metrics
 
-The chatbot works with structured tabular financial data, including but not limited to:
+Each **row** in the dataset represents **one holding or trade**.
 
-Investment portfolios and funds
+---
 
-Holdings and trades
+## 🧠 Strict Intelligence Rules
 
-Securities (Equity, Bond, Asset-Backed, etc.)
+The chatbot follows **non-negotiable rules**:
 
-Quantities, prices, and FX rates
+1️⃣ Answers are generated **only** from uploaded data
+2️⃣ No internet, no external databases, no assumptions
+3️⃣ No fabricated numbers or explanations
+4️⃣ Calculations are derived strictly from available columns
+5️⃣ If data is missing, it clearly refuses to answer
 
-Profit and Loss metrics
+🛑 **Fallback Response (Exact):**
 
-Each row in the dataset represents one holding or trade record.
+```
+Sorry can not find the answer
+```
 
-Supported Data Fields
+---
 
-The chatbot understands and uses the following fields:
+## 📌 Key Data Fields Used
 
-Fund Identification: ShortName, PortfolioName
+The chatbot identifies and computes answers using:
 
-Security Identification: SecurityId, SecName, SecurityTypeName
+### 🔹 Fund Identification
 
-Dates: AsOfDate, OpenDate, CloseDate
+* `ShortName`
+* `PortfolioName`
 
-Quantities & Prices: StartQty, Qty, StartPrice, Price
+### 🔹 Security Identification
 
-Valuation: MV_Local, MV_Base
+* `SecurityId`
+* `SecName`
+* `SecurityTypeName`
 
-Profit and Loss Metrics:
+### 🔹 Profit & Loss Metrics
 
-PL_DTD (Day-to-Date)
+* `PL_DTD`  (Day-to-Date)
+* `PL_MTD`  (Month-to-Date)
+* `PL_QTD`  (Quarter-to-Date)
+* `PL_YTD`  (Year-to-Date)
 
-PL_MTD (Month-to-Date)
+⚠️ Yearly performance comparisons are based **only on `PL_YTD`**.
 
-PL_QTD (Quarter-to-Date)
+---
 
-PL_YTD (Year-to-Date)
+## 📐 How Calculations Work
 
-Only these fields are used for calculations and comparisons.
+1️⃣ **Holdings Count** = Number of matching rows
+2️⃣ **Fund Performance** = Comparison using `PL_YTD`
+3️⃣ **Totals / Sums** = Aggregated strictly from numeric columns
+4️⃣ **Date Handling** = Limited to provided `AsOfDate`
 
-Core Rules (Strictly Enforced)
+No inferred timelines or missing dates are assumed.
 
-The chatbot answers only using the uploaded files.
+---
 
-External knowledge, web data, or assumptions are not allowed.
+## 💬 Example Questions & Responses
 
-If the answer is not present or cannot be calculated from the data, the response is exactly:
+### ❓ Total number of holdings for Garfield fund
 
-"Sorry can not find the answer"
+✅ *Answer:* The total number of holdings for the Garfield fund is **X**.
 
-No hallucinated values, summaries, or explanations.
+### ❓ Which fund performed better yearly
 
-All calculations (counts, totals, comparisons) are derived strictly from the dataset.
+✅ *Answer:* Based on `PL_YTD`, Fund A performed better than Fund B because its yearly P&L is higher.
 
-Data Interpretation Rules
+### ❓ What is the NAV of the fund
 
-Each row = one holding or trade
+❌ *Answer:*
 
-Number of holdings or trades = number of matching rows
+```
+Sorry can not find the answer
+```
 
-Fund performance comparison is based only on PL_YTD
+---
 
-Yearly performance does not assume dates beyond AsOfDate
+## 🚀 Use Cases
 
-If data is missing or incomplete, no inference is made
+1️⃣ Financial data validation
+2️⃣ Portfolio performance comparison
+3️⃣ Internal fund analysis tools
+4️⃣ Audit-safe AI applications
+5️⃣ Academic or final-year engineering projects
 
-Example Questions Supported
-Holdings & Trades
+---
 
-Total number of holdings for a given fund
+## ✅ Project Highlights
 
-Number of trades for a specific security
+✔️ Zero hallucination policy
+✔️ Deterministic and explainable answers
+✔️ Finance-safe chatbot behavior
+✔️ Ideal for sensitive investment data
+✔️ Clean, rule-driven architecture
 
-Performance Analysis
+---
 
-Which fund performed better based on yearly Profit and Loss
+## 🧩 Future Enhancements
 
-Compare PL_YTD between two or more funds
+1️⃣ Role-based access control
+2️⃣ Natural language query refinement
+3️⃣ Interactive dashboards
+4️⃣ Multi-file portfolio comparison
+5️⃣ Exportable analysis reports
 
-Valid Response Example
+---
 
-Q: Which fund performed better based on yearly Profit and Loss?
+📌 **Note:** This chatbot intentionally prioritizes correctness over creativity. If the data does not support an answer, it will always refuse safely.
 
-A: Based on PL_YTD, Fund A performed better than Fund B because its yearly profit/loss is higher.
+---
 
-Invalid / Unsupported Query Example
-
-Q: What is the NAV of the fund?
-
-A: Sorry can not find the answer
-
-What This Chatbot Will NOT Do
-
-Guess or estimate missing values
-
-Use internet or real-time market data
-
-Answer conceptual finance questions
-
-Provide investment advice
-
-Intended Use Cases
-
-Financial data validation
-
-Portfolio performance analysis
-
-Fund comparison dashboards
-
-Internal analytics tools
-
-Academic or demo projects requiring zero hallucination
-
-Deployment Notes
-
-Designed to work with modern LLM frameworks (e.g., AI SDK, vo.dev, Flowise)
-
-Web access must be disabled
-
-A strict system prompt is required to enforce grounding
-
-Disclaimer
-
-This chatbot is an analytical tool and does not provide financial advice. All outputs are strictly derived from the uploaded data files.
-
-Author
-
-Project Type: Data-grounded AI chatbot for financial analysis
-
-If the data does not contain the answer, the chatbot will always say:
-
-"Sorry can not find the answer"
+👨‍💻 *Developed as a structured financial data analysis project using strict AI guardrails.*
